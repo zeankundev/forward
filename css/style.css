@@ -1,0 +1,779 @@
+:root {
+  --background: #1d1d1d;
+  --layer: #2e2e2e;
+  --metalayer: #1d1d1d;
+  --btn: #2e2e2e;
+  --btn-hover: #3f3f3f;
+  --separator: rgba(255, 255, 255, 0.1);
+  --text: #fff;
+  --text-em: #0084ff;
+  --danger: #e65864;
+  --danger-layer: rgba(230, 88, 100, 0.3);
+}
+@keyframes modalEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(-250px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 0;
+  overflow: hidden;
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Gotham', system-ui;
+  user-select: none;
+}
+:disabled,
+.disabled,
+:disabled ~ .add {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hidden {
+  display: none;
+}
+.hidden-accessible {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+button, input {
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+.trimming {
+  cursor: ew-resize;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: none;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-em);
+  border-radius: 5px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: none;
+}
+
+.main {
+  flex: auto;
+  display: flex;
+}
+
+.panel {
+  display: flex;
+  width: 670px;
+  flex-direction: column;
+  flex: none;
+}
+.menubar {
+  background-color: var(--layer);
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+}
+.logo {
+  color: var(--text-em);
+  font-weight: 800;
+  font-size: 16px;
+  display: inline-block;
+  margin-right: 15px;
+}
+.censored .logo {
+  visibility: hidden;
+}
+.menu-btn {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 5px;
+}
+
+.side-panel {
+  flex: auto;
+  height: 0;
+  overflow: auto;
+  overflow: overlay;
+}
+
+.sources {
+  padding: 5px;
+}
+.source {
+  display: inline-block;
+  width: 128px;
+  height: 72px;
+  background-color: var(--layer);
+  border-radius: 10px;
+  cursor: pointer;
+  vertical-align: top;
+  margin: 5px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  word-break: break-word;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.source:hover {
+  background-color: #3f3f3f;
+  padding: 5px;
+  transition: all 0.2s ease-in-out;
+}
+.audio.source {
+  background-size: 100% 100%;
+}
+.name {
+  display: block;
+  font-size: 12px;
+  padding: 5px 10px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+}
+.add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.has-selection .sources {
+  display: none;
+}
+
+.property {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  padding-left: 10px;
+}
+.property:nth-child(2n) {
+  background-color: var(--layer);
+}
+.property span {
+  flex: auto;
+  font-size: 14px;
+}
+.input-wrapper {
+  flex: none;
+  background-color: var(--metalayer);
+  padding: 5px;
+  transition: all 0.2s ease-in-out;
+  border-radius: 5px;
+  position: relative;
+}
+.input-wrapper:hover {
+  background-color: var(--layer);
+  transition: all 0.2s ease-in-out;
+}
+.text {
+  display: flex;
+  flex: auto;
+}
+.number {
+  padding-right: 30px;
+  font-family: monospace;
+}
+.prop-select {
+  padding: 0;
+  padding-left: 10px;
+  cursor: pointer;
+}
+.prop-select span, .prop-select .material-icons {
+  vertical-align: middle;
+}
+.prop-select .material-icons {
+  padding: 3px;
+}
+.input-wrapper:focus-within {
+  background-color: var(--btn-hover);
+}
+.value {
+  font-size: 14px;
+  outline: none;
+}
+.text .value {
+  flex: auto;
+}
+.number .value {
+  width: 8ch;
+  text-align: right;
+  cursor: ns-resize;
+}
+.value::-webkit-inner-spin-button {
+  display: none;
+}
+.unit {
+  font-size: 14px;
+  margin-left: 5px;
+  white-space: pre;
+}
+.text .unit {
+  display: none;
+}
+.key {
+  background-image: url('./key.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: absolute;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  top: 0;
+  cursor: pointer;
+}
+.active {
+  background-image: url('./keyed.svg');
+}
+.no-selected {
+  font-size: 12px;
+  padding: 10px;
+}
+
+.player {
+  flex-direction: column;
+  flex: auto;
+  display: flex;
+}
+.preview {
+  background-color: black;
+  flex: auto;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#preview {
+  max-width: 100%;
+  max-height: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  background-color: var(--layer);
+}
+.flex {
+  flex: auto;
+}
+.space {
+  width: 20px;
+}
+.tool-btn {
+  padding: 0 5px;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tool-btn:hover {
+  background-color: #3f3f3f;
+  transition: all 0.2s ease-in-out; 
+}
+.timestamp {
+  font-size: 14px;
+  margin: 0 5px;
+}
+#current {
+  color: var(--text-em);
+}
+
+.timeline-scroller {
+  position: relative;
+  height: 240px;
+  overflow: scroll;
+  background-color: var(--metalayer);
+}
+.timeline {
+  flex: auto;
+  padding-left: 100px;
+}
+.time-markers {
+  position: relative;
+  border-bottom: 1px solid var(--separator);
+  height: 20px;
+  width: 100%;
+}
+.marker {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 10px;
+  bottom: 0;
+  padding-bottom: 5px;
+}
+.marker::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  border-left: 1px solid var(--separator);
+  margin-left: -0.5px;
+  height: 5px;
+  bottom: 0;
+}
+.major::after {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.layer {
+  min-height: 30px;
+  position: relative;
+  padding: 5px 0;
+}
+.layer:nth-child(2n+1) {
+  background-color: var(--layer);
+}
+
+.remove {
+  position: absolute;
+  border: 1px solid var(--danger);
+  background-color: var(--danger-layer);
+  top: 5px;
+  bottom: 5px;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.track {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-repeat: repeat-x;
+  background-color: var(--metalayer);
+  background-position: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--start);
+  margin: 5px 0;
+  width: var(--length);
+  overflow: hidden;
+}
+.dragging {
+  position: fixed;
+  height: 30px;
+  opacity: 0.5;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  bottom: auto;
+  pointer-events: none;
+}
+.placeholder {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.audio.track {
+  --background-size-y: 100%;
+  background-position-y: top;
+}
+.image.track {
+  background-size: cover;
+}
+.text.track {
+  background-color: #725287;
+}
+.rect.track {
+  background-color: #925455;
+}
+.track .name {
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 10px;
+  flex: none;
+  height: 16px;
+}
+
+.selected {
+  position: relative;
+  margin: 0;
+  z-index: 10;
+  overflow: visible;
+}
+.audio.selected {
+  --background-size-y: 16px;
+}
+.keys {
+  background-color: var(--background);
+}
+.selected .keys {
+  display: block;
+  min-height: 20px;
+}
+.selected .key-row {
+  position: relative;
+  height: 20px;
+}
+.key-label {
+  position: absolute;
+  right: 100%;
+  font-size: 12px;
+  padding-right: 5px;
+  white-space: nowrap;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+.key-ease {
+  width: 16px;
+  padding: 0;
+  height: 16px;
+  background-color: #8e44ad;
+  margin-left: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+.key-ease .ease-icon {
+  width: 10px;
+  pointer-events: none;
+}
+.key-dot {
+  background-image: url('./keyed.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  position: absolute;
+  height: 100%;
+  width: 24px;
+  margin-left: -12px;
+  top: 0;
+  opacity: 0.7;
+}
+.selection {
+  position: absolute;
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  background-color: rgba(0, 255, 255, 0.5);
+}
+.select {
+  filter: drop-shadow(0 0 3px rgba(0, 255, 255, 1));
+  opacity: 1;
+}
+
+.trim {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  cursor: ew-resize;
+  width: 15px;
+}
+.trim-start {
+  left: 0;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.7), transparent);
+}
+.trim-end {
+  right: 0;
+  background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.7), transparent);
+}
+.selected .trim {
+  display: none;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  margin-left: 100px;
+  background-color: var(--text-em);
+  z-index: 20;
+  pointer-events: none;
+}
+.playhead::before {
+  content: '';
+  display: block;
+  border-top: 10px solid var(--text-em);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  margin-left: -9.5px;
+}
+
+.ease-icon circle {
+  fill: rgba(255, 255, 255, 0.8);
+}
+.ease-icon path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ease-editor {
+  position: fixed;
+  display: flex;
+  background-color: var(--background);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  z-index: 40;
+  left: 20px;
+}
+.ease-library {
+  padding-right: 5px;
+}
+.ease {
+  display: block;
+  font-size: 12px;
+  background-color: var(--btn);
+  text-align: left;
+  margin-bottom: 5px;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.ease .ease-icon {
+  width: 10px;
+  padding: 3px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.ease-name {
+  vertical-align: middle;
+}
+.ease-row {
+  display: flex;
+  align-items: center;
+}
+.ease-label {
+  display: inline-block;
+  width: 50px;
+  font-size: 12px;
+  text-align: right;
+  margin-right: 5px;
+}
+.ease-item {
+  padding: 5px;
+  cursor: pointer;
+}
+.ease-item .ease-icon {
+  width: 20px;
+  padding: 3px;
+}
+.ease-heading {
+  display: inline-block;
+  width: 36px;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.ease-text {
+  font-size: 12px;
+}
+.ease-paste {
+  font-family: monospace;
+  color: white;
+  width: 22ch;
+}
+.ease-square {
+  background-color: var(--layer);
+  position: relative;
+}
+.ease-disabled { /* only visually disabled because clicking will reenable it */
+  opacity: 0.5;
+}
+.ease-control {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--btn-hover);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  margin: -10px;
+}
+.ease-curve {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.ease-control-line {
+  fill: none;
+  stroke: var(--separator);
+  stroke-width: 1;
+}
+.ease-animation {
+  margin-top: 5px;
+}
+
+.exporting .main,
+.exporting .timeline-scroller {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.exporting-msg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 500px;
+  text-align: center;
+  margin: 50px auto;
+  font-size: 16px;
+}
+.exporting .exporting-msg {
+  display: block;
+}
+
+.modal-cover {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  z-index: 50;
+}
+.modal {
+  display: none;
+  flex-direction: column;
+  max-width: 800px;
+  max-height: 60%;
+  margin: 10px;
+  background-color: var(--background);
+}
+.show {
+  display: flex;
+  box-shadow: 0px 0px 71px -1px rgba(0,0,0,0.75);
+  animation: modalEntrance 0.5s ease 0s 1 normal forwards;
+}
+.header {
+  background-color: var(--metalayer);
+  display: flex;
+}
+.title {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 15px;
+  flex: auto;
+}
+.close {
+  cursor: pointer;
+}
+.content {
+  flex: auto;
+  overflow: auto;
+  padding: 10px;
+}
+.text-content {
+  font-size: 14px;
+  line-height: 1.8;
+  user-select: text;
+}
+.text-content :first-child {
+  margin-top: 0;
+}
+.text-content :last-child {
+  margin-bottom: 0;
+}
+.text-content h2, .text-content h3 {
+  font-weight: normal;
+}
+.text-content a {
+  color: var(--text-em);
+  text-decoration: none;
+}
+.text-content a:hover {
+  text-decoration: underline;
+}
+.text-content code {
+  background-color: var(--layer);
+  border: 1px solid var(--separator);
+}
+
+.menu {
+  position: fixed;
+  background-color: var(--metalayer);
+  z-index: 60;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  padding: 5px 0;
+  overflow: auto;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.menu-item {
+  display: block;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+.menu-item:hover {
+  background-color: var(--btn-hover);
+}
+.danger {
+  color: var(--danger);
+}
+
+.dropdown {
+  font-size: 14px;
+  cursor: pointer;
+  background-color: var(--btn);
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.dropdown span, .dropdown .material-icons {
+  vertical-align: middle;
+}
+.number {
+  font-size: 14px;
+}
+.number-input input {
+  background-color: var(--btn);
+  padding: 5px 10px;
+  font-family: monospace;
+  width: 30ch;
+  margin-left: 10px;
+}
+.number-input input:focus {
+  background-color: var(--btn-hover);
+}
+
+.resizer {
+  position: relative;
+  z-index: 1;
+  flex: none;
+}
+.resizer.horizontal {
+  cursor: ew-resize;
+  width: 10px;
+  margin: 0 -5px;
+}
+.resizer.vertical {
+  cursor: ns-resize;
+  height: 10px;
+  margin-top: -10px;
+  /* doesn't extend downwards because time markers are already too thin */
+}

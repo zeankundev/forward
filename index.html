@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Forward</title>
+    <meta name="description" content="A dumb video editor"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="./icon.png" type="image/png">
+    <link href="https://db.onlinewebfonts.com/c/3a47f5f06b5484abfeee9eac90348a9c?family=Gotham" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./script/_dom2.js" charset="utf-8"></script>
+    <script src="./script/jszip.min.js" charset="utf-8"></script>
+    <script src="./script/bezier-easing.js" charset="utf-8"></script>
+    <script src="./script/easingFunctions.js" charset="utf-8"></script>
+
+    <script src="./script/utils.js" charset="utf-8"></script>
+    <script src="./script/menu.js" charset="utf-8"></script>
+    <script src="./script/sources.js" charset="utf-8"></script>
+    <script src="./script/properties.js" charset="utf-8"></script>
+    <script src="./script/tracks.js" charset="utf-8"></script>
+    <script src="./script/layers.js" charset="utf-8"></script>
+    <script src="./script/easing-editor.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="panel" id="panel">
+        <div class="menubar">
+          <div class="logo">Forward</div>
+          <input type="file" accept=".fwd" class="hidden-accessible" id="load">
+          <button type="button" class="menu-btn" id="file">File</button>
+          <button type="button" class="menu-btn" id="help">Help</button>
+        </div>
+        <div class="side-panel">
+          <div class="sources">
+            <input type="file" accept="video/*,audio/*,image/*" class="hidden-accessible" title="Add a source" id="add" multiple>
+            <label class="add source" for="add"><i class="material-icons">add</i></label>
+          </div>
+          <div class="properties" id="properties"></div>
+        </div>
+      </div>
+      <div class="resizer horizontal" id="resize-panel"></div>
+      <div class="player">
+        <div class="preview">
+          <canvas id="preview" width="1280" height="720"></canvas>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="tool-btn" id="undo" title="Undo (ctrl + Z)" disabled><i class="material-icons">undo</i></button>
+          <button type="button" class="tool-btn" id="redo" title="Redo (ctrl + Y)" disabled><i class="material-icons">redo</i></button>
+          <button type="button" class="tool-btn" id="text" title="Add text"><i class="material-icons">title</i></button>
+          <button type="button" class="tool-btn" id="rect" title="Add rectangle"><i class="material-icons">crop_16_9</i></button>
+          <span class="flex"></span>
+          <button type="button" class="tool-btn" id="start" title="Jump to beginning (ctrl + shift + left arrow)"><i class="material-icons">first_page</i></button>
+          <button type="button" class="tool-btn" id="prev" title="Jump to previous point (ctrl + left arrow)"><i class="material-icons">navigate_before</i></button>
+          <button type="button" class="tool-btn" id="play" title="Play/Pause (space)"><i class="material-icons" id="icon">play_arrow</i></button>
+          <button type="button" class="tool-btn" id="next" title="Jump to next point (ctrl + right arrow)"><i class="material-icons">navigate_next</i></button>
+          <span class="flex"></span>
+          <span class="space"></span>
+          <button type="button" class="tool-btn" id="out" title="Zoom out (-)"><i class="material-icons">zoom_out</i></button>
+          <button type="button" class="tool-btn" id="in" title="Zoom in (=)"><i class="material-icons">zoom_in</i></button>
+          <span class="timestamp"><span id="current">0:00</span> / <span id="length">0:00</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="resizer vertical" id="resize-timeline"></div>
+    <div class="timeline-scroller" id="scroll">
+      <div class="timeline">
+        <div class="time-markers" id="axis"></div>
+        <div class="layers" id="layers"></div>
+        <div class="playhead" id="playhead"></div>
+      </div>
+    </div>
+
+    <div class="modal-cover" id="modal-cover">
+      <div class="modal" id="vid-settings-modal">
+        <div class="header">
+          <h1 class="title">Video settings</h1>
+          <button type="button" class="close" title="Close (esc)"><i class="material-icons">close</i></button>
+        </div>
+        <div class="content text-content">
+          <p><label class="number-input">Project Name: <input type="text" id="name" value="New Project 1" placeholder="Input project name please!"></label></p>
+          <p><label>Video quality: <button type="button" class="dropdown"><span id="select-preset">720p</span><i class="material-icons">arrow_drop_down</i></button></label></p>
+          <div class="custom-size hidden" id="custom-size">
+            <p><label class="number-input">Width: <input type="number" id="width"></label></p>
+            <p><label class="number-input">Height: <input type="number" id="height"></label></p>
+            <p><label class="number-input">Bitrate (Mbps): <input type="number" id="bitrate"></label></p>
+          </div>
+          <p><label>Export format: <button type="button" class="dropdown"><span id="select-encode"></span><i class="material-icons">arrow_drop_down</i></button></label></p>
+        </div>
+      </div>
+      <div class="modal" id="help-modal">
+        <div class="header">
+          <h1 class="title">How to use</h1>
+          <button type="button" class="close" title="Close (esc)"><i class="material-icons">close</i></button>
+        </div>
+        <div class="content text-content">
+          <p>Just read the docs (WIP)</p>
+        </div>
+      </div>
+      <div class="modal" id="shortcuts-modal">
+        <div class="header">
+          <h1 class="title">Keyboard shortcuts</h1>
+          <button type="button" class="close" title="Close (esc)"><i class="material-icons">close</i></button>
+        </div>
+        <div class="content text-content">
+          <p>The <code>command</code> is accepted as a substitute for the control key on Macs.</p>
+          <dl>
+            <dt>Play/Pause</dt>
+            <dd><code>space</code></dd>
+            <dt>Zoom in</dt>
+            <dd><code>=</code> or <code>+</code> if your keyboard has such a key</dd>
+            <dt>Zoom out</dt>
+            <dd><code>-</code></dd>
+            <dt>Undo</dt>
+            <dd><code>ctrl</code> + <code>z</code></dd>
+            <dt>Redo</dt>
+            <dd><code>ctrl</code> + <code>shift</code> + <code>z</code> or <code>ctrl</code> + <code>y</code></dd>
+            <dt>Delete selected keys</dt>
+            <dd><code>delete</code></dd>
+            <dt>Close modal</dt>
+            <dd><code>esc</code></dd>
+          </dl>
+          <h2>Seeking</h2>
+          <p><code>left arrow</code> goes back a second, and <code>right arrow</code> goes forward; holding <code>shift</code> jumps by 10 seconds, while holding <code>alt</code> jumps by 0.1 seconds. In addition,</p>
+          <dl>
+            <dt>Previous point</dt>
+            <dd><code>ctrl</code> + <code>left arrow</code></dd>
+            <dt>Next point</dt>
+            <dd><code>ctrl</code> + <code>right arrow</code></dd>
+            <dt>Beginning</dt>
+            <dd><code>ctrl</code> + <code>shift</code> + <code>left arrow</code></dd>
+            <dt>End</dt>
+            <dd><code>ctrl</code> + <code>shift</code> + <code>right arrow</code></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="modal" id="about-modal">
+        <div class="header">
+          <h1 class="title">About Forward</h1>
+          <button type="button" class="close" title="Close (esc)"><i class="material-icons">close</i></button>
+        </div>
+        <div class="content text-content">
+          <p>Forward is a shit video editor, a heavily modified version of <a target="_blank" href="https://sheeptester.github.io/javascript/video/shit">sheeptester's OpenShit</a></p>
+          <p>Been working on this for like a day. BRUH.</p>
+          <h2 class="title">Helpers</h2>
+          <p>The following people have helped me out:</p>
+          <ul>
+            <li><a href="https://copilot.github.com" target="_blank">Copilot</a></li>
+          </ul>
+          <a href="https://zeankundev.github.io">Made by zeankun.dev</a>
+        </div>
+      </div>
+      <div class="modal" id="go-to-modal">
+        <div class="header">
+          <h1 class="title">Jump to time</h1>
+          <button type="button" class="close" title="Close (esc)"><i class="material-icons">close</i></button>
+        </div>
+        <div class="content">
+          <label class="number-input">Time (s): <input type="number" id="time"></label>
+        </div>
+      </div>
+    </div>
+
+    <p class="exporting-msg">Keep this page visible while the video is playing; press escape to cancel exporting.</p>
+
+    <script src="./script/main.js" charset="utf-8"></script>
+  </body>
+</html>
