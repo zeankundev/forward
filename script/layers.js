@@ -387,7 +387,15 @@ function exportVideo() {
       const saveLink = document.createElement('a');
       saveLink.href = exportedURL;
       if (actualname !== '') {
-        saveLink.download = actualname + '.webm';
+        // find the project video extension (e.g video/x-matroska) is .mkv
+        const ext = usingExportType.split('/')[1];
+        if (ext === 'webm') {
+          saveLink.download = actualname + '.webm';
+        } else if (ext === 'mpeg') {
+          saveLink.download = actualname + '.mp4';
+        } else if (ext === 'x-matroska') {
+          saveLink.download = actualname + '.mkv';
+        }
       }
       else {
         saveLink.download = 'forward-export.webm';

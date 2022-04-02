@@ -154,8 +154,17 @@ const exportTypes = [
   'video/webm;codecs=vp8',
   'video/webm;codecs=daala',
   'video/webm;codecs=h264',
-  'video/mpeg'
-];
+  'video/mpeg',
+  'video/x-matroska',
+  'video/x-matroska;codecs=theora',
+  'video/x-matroska;codecs=vorbis',
+  'video/x-matroska;codecs=vp8',
+  'video/x-matroska;codecs=vp9',
+  'video/x-matroska;codecs=av1',
+  'video/x-matroska;codecs=H264',
+  'video/x-matroska;codecs=MPEG4',
+  'video/x-matroska;codecs=opus'
+].filter(type => MediaRecorder.isTypeSupported(type));
 let usingExportType = exportTypes[exportTypes.length - 1];
 selectEncode.textContent = usingExportType;
 const exportTypeMenu = new Menu(
