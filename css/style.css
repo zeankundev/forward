@@ -235,7 +235,7 @@ button, input {
   display: none;
 }
 .key {
-  background-image: url('./key.svg');
+  background-image: url('../key.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 12px;
@@ -247,7 +247,7 @@ button, input {
   cursor: pointer;
 }
 .active {
-  background-image: url('./keyed.svg');
+  background-image: url('../keyed.svg');
 }
 .no-selected {
   font-size: 12px;
@@ -452,7 +452,7 @@ button, input {
   pointer-events: none;
 }
 .key-dot {
-  background-image: url('./keyed.svg');
+  background-image: url('../keyed.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 12px;
