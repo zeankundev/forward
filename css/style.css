@@ -89,7 +89,7 @@ button, input {
 
 .panel {
   display: flex;
-  width: 670px;
+  width: 411px;
   flex-direction: column;
   flex: none;
 }
@@ -143,7 +143,7 @@ button, input {
 }
 .source:hover {
   background-color: #3f3f3f;
-  padding: 5px;
+  padding: 3px;
   transition: all 0.2s ease-in-out;
 }
 .audio.source {
