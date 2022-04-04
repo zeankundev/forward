@@ -389,11 +389,11 @@ function exportVideo() {
       if (actualname !== '') {
         // find the project video extension (e.g video/x-matroska) is .mkv
         const ext = usingExportType.split('/')[1];
-        if (ext === 'webm') {
+        if (ext.includes('webm')) {
           saveLink.download = actualname + '.webm';
-        } else if (ext === 'mpeg') {
+        } else if (ext.includes('mpeg')) {
           saveLink.download = actualname + '.mp4';
-        } else if (ext === 'x-matroska') {
+        } else if (ext.includes('x-matroska')) {
           saveLink.download = actualname + '.mkv';
         }
       }
