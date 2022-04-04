@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 400;
+    src: url(./gothambook-webfont.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 400;
+    font-style: italic;
+    src: url(./gothambookitalic-webfont.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 500;
+    src: url(./gothammedium-webfont.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 500;
+    font-style: italic;
+    src: url(./gothammediumitalic-webfont.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 700;
+    font-style: italic;
+    src: url(./gothambolditalic-webfont.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Gotham';
+    font-weight: 700;
+    src: url(./gothambold-webfont.woff2) format('woff2');
+}

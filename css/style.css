@@ -55,7 +55,6 @@ body {
 	z-index: -1;
 }
 button, input {
-  -webkit-appearance: none;
   border: none;
   background: none;
   font: inherit;
@@ -671,7 +670,7 @@ button, input {
 .title {
   display: inline-block;
   font-size: 20px;
-  font-weight: normal;
+  font-weight: 700;
   margin: 15px;
   flex: auto;
 }

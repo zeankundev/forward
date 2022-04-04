@@ -8,11 +8,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="shortcut icon" href="./icon.png" type="image/png">
     <link href="https://db.onlinewebfonts.com/c/3a47f5f06b5484abfeee9eac90348a9c?family=Gotham" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css" id="style">
+    <link rel="stylesheet" href="./fonts/gotham.css">
     <script src="script/dom2.js" charset="utf-8"></script>
     <script src="script/jszip.min.js" charset="utf-8"></script>
     <script src="script/bezier-easing.js" charset="utf-8"></script>
-    <script src="./script/easingFunctions.js" charset="utf-8"></script>
+    <script src="script/easingFunctions.js" charset="utf-8"></script>
 
     <script src="script/utils.js" charset="utf-8"></script>
     <script src="script/menu.js" charset="utf-8"></script>
@@ -95,6 +96,8 @@
         </div>
         <div class="content text-content">
           <p>Just read the docs (WIP)</p>
+          <input type="checkbox" id="dark-mode-checkbox" checked>
+          <label for="dark-mode-checkbox">Dark mode</label>
         </div>
       </div>
       <div class="modal" id="shortcuts-modal">

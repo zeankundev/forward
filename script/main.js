@@ -33,6 +33,7 @@ const actions = {
 };
 
 const loadBtn = document.getElementById('load');
+const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
 const fileBtn = document.getElementById('file');
 const helpBtn = document.getElementById('help');
 const addBtn = document.getElementById('add');
@@ -47,6 +48,7 @@ const redoBtn = document.getElementById('redo');
 const zoomOutBtn = document.getElementById('out');
 const zoomInBtn = document.getElementById('in');
 
+const style = document.getElementById('style');
 const panelWrapper = document.getElementById('panel');
 const propertiesList = document.getElementById('properties');
 const playIcon = document.getElementById('icon');
@@ -476,6 +478,17 @@ document.addEventListener('keydown', e => {
     preventDefault = false;
   }
   if (preventDefault) e.preventDefault();
+});
+
+darkModeCheckbox.addEventListener('change', e => {
+    if (darkModeCheckbox.checked) {
+      style.href = './css/style.css';
+      console.log('dark mode');
+    }
+    else {
+      style.href = './css/light.css';
+      console.log('light mode');
+    }
 });
 
 const fileMenu = new Menu([
