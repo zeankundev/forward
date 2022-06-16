@@ -34,7 +34,7 @@ body {
   overflow: hidden;
   background-color: var(--background);
   color: var(--text);
-  font-family: 'Gotham', system-ui;
+  font-family: system-ui;
   user-select: none;
 }
 :disabled,
@@ -528,12 +528,20 @@ button, input {
 
 .ease-editor {
   position: fixed;
-  display: flex;
+  width: 50%;
+  height: 50%;
   background-color: var(--background);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
   padding: 5px;
   z-index: 40;
   left: 20px;
+}
+.ease-edit {
+  display: inline-block;
+  width: 30%;
+  position: relative;
+  top: -370px;
+  right: -185px;
 }
 .ease-library {
   padding-right: 5px;
