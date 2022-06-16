@@ -11,6 +11,7 @@ const actions = {
   VIDEO_HEIGHT: 'change video height',
   VIDEO_BITRATE: 'change export bitrate',
   VIDEO_FORMAT: 'change export format',
+  VIDEO_ENGINE: 'change render engine',
   SPLIT: 'split tracks',
   MOVE_UP: 'move layer up',
   MOVE_DOWN: 'move layer down',
@@ -68,6 +69,7 @@ const widthInput = document.getElementById('width');
 const heightInput = document.getElementById('height');
 const bitrateInput = document.getElementById('bitrate');
 const selectEncode = document.getElementById('select-encode');
+const selectEngine = document.getElementById('select-engine');
 const goToTime = document.getElementById('time');
 
 const preview = document.getElementById('preview');
@@ -180,6 +182,24 @@ const exportTypeMenu = new Menu(
 selectEncode.parentNode.addEventListener('click', e => {
   const {left, bottom} = selectEncode.parentNode.getBoundingClientRect();
   exportTypeMenu.open(left, bottom);
+});
+const engineTypes = [
+  'PowerFast (MediaRecorder)',
+  'MaxPro (StreamRecorder)',
+];
+let usingEngineType = engineTypes[0];
+selectEngine.textContent = usingEngineType;
+const engineTypeMenu = new Menu(
+  engineTypes.map(type => ({label: type, value: type})),
+  type => {
+    log(actions.VIDEO_ENGINE);
+    selectEngine.textContent = type;
+    usingEngineType = type;
+  }
+);
+selectEngine.parentNode.addEventListener('click', e => {
+  const {left, bottom} = selectEngine.parentNode.getBoundingClientRect();
+  engineTypeMenu.open(left, bottom);
 });
 
 const LEFT = 100;

@@ -257,9 +257,10 @@ button, input {
   flex-direction: column;
   flex: auto;
   display: flex;
+  border-left: 1px solid white;
 }
 .preview {
-  background-color: black;
+  background-color: #1d1d1d;
   flex: auto;
   height: 0;
   display: flex;
@@ -269,7 +270,7 @@ button, input {
 #preview {
   max-width: 100%;
   max-height: 100%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #000;
 }
 
 .toolbar {
@@ -411,6 +412,7 @@ button, input {
   margin: 0;
   z-index: 10;
   overflow: visible;
+  border: 2px solid #0084ff;
 }
 .audio.selected {
   --background-size-y: 16px;
@@ -481,14 +483,16 @@ button, input {
 }
 .trim-start {
   left: 0;
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.7), transparent);
+}
+.trim-start:hover {
+  border-left: 4px solid #0084ff;
 }
 .trim-end {
   right: 0;
-  background-image: linear-gradient(-90deg, rgba(0, 0, 0, 0.7), transparent);
 }
-.selected .trim {
-  display: none;
+
+.trim-end:hover {
+  border-right: 4px solid #0084ff;
 }
 
 .playhead {
